@@ -1,0 +1,6 @@
+-- AlterTable
+ALTER TABLE "Account" ALTER COLUMN "balance" SET DATA TYPE DECIMAL(65,30),
+ALTER COLUMN "dailyWithdrawalLimit" SET DATA TYPE DECIMAL(65,30);
+
+-- AlterTable
+ALTER TABLE "Transaction" ALTER COLUMN "value" SET DATA TYPE DECIMAL(65,30);

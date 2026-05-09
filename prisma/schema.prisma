@@ -1,0 +1,47 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "linux-musl-openssl-3.0.x", "linux-musl-arm64-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum AccountType {
+  CHECKING
+  SAVINGS
+}
+
+enum TransactionType {
+  DEPOSIT
+  WITHDRAWAL
+}
+
+model Account {
+  accountId            String          @id @default(uuid())
+  personId             String
+  balance              Decimal         @default(0)
+  dailyWithdrawalLimit Decimal
+  isActive             Boolean         @default(true)
+  accountType          AccountType
+  createdAt            DateTime        @default(now()) @db.Date
+  transactions         Transaction[]
+
+  @@index([personId])
+}
+
+model Transaction {
+  transactionId   String          @id @default(uuid())
+  accountId       String
+  value           Decimal
+  type            TransactionType
+  transactionDate DateTime        @default(now()) @db.Timestamptz
+
+  account Account @relation(fields: [accountId], references: [accountId], onDelete: Cascade)
+
+  @@index([accountId, type, transactionDate])
+}

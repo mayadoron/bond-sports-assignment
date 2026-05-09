@@ -1,0 +1,24 @@
+node_modules/
+dist/
+.git/
+src/**/*.js
+src/**/*.js.map
+src/**/*.d.ts
+.env
+.env.test
+coverage/
+*.log
+
+# TypeScript
+*.tsbuildinfo
+tsconfig.*.tsbuildinfo
+
+# NestJS
+.nestjs/
+
+# Prisma
+prisma/migrations/dev.db
+prisma/*.db
+prisma/*.db-journal
+generated/
+
