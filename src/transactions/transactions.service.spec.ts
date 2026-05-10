@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { TransactionType } from '@prisma/client';
+import { Prisma, TransactionType } from '@prisma/client';
 import { TransactionsService } from './transactions.service';
 import { PrismaService } from '../prisma/prisma.service';
 import { AccountsService } from '../accounts/accounts.service';
@@ -85,8 +85,11 @@ describe('TransactionsService', () => {
     });
 
     it('throws AccountNotFoundException when the account does not exist', async () => {
-      mockAccountsService.findAccountById.mockRejectedValue(
-        new AccountNotFoundException(ACCOUNT_ID),
+      mockTx.account.findUniqueOrThrow.mockRejectedValue(
+        new Prisma.PrismaClientKnownRequestError(
+          'Record not found',
+          { code: 'P2025', clientVersion: '5.22.0' },
+        ),
       );
 
       await expect(service.deposit(ACCOUNT_ID, { value: 200 })).rejects.toThrow(
@@ -127,6 +130,7 @@ describe('TransactionsService', () => {
       const poorAccount = { ...activeAccount, balance: 50 };
       mockAccountsService.findAccountById.mockResolvedValue(poorAccount);
       mockTx.account.findUniqueOrThrow.mockResolvedValue(poorAccount);
+      mockTx.transaction.aggregate.mockResolvedValue({ _sum: { value: 0 } });
 
       await expect(service.withdraw(ACCOUNT_ID, { value: 200 })).rejects.toThrow(
         InsufficientFundsException,
