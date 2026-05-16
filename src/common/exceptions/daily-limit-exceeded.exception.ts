@@ -1,4 +1,4 @@
-import { UnprocessableEntityException } from '@nestjs/common';
+import { UnprocessableEntityException } from "@nestjs/common";
 
 interface DailyLimitExceededDetails {
   dailyWithdrawalLimit: number;
@@ -15,7 +15,7 @@ export class DailyLimitExceededException extends UnprocessableEntityException {
     const remainingAllowance = dailyWithdrawalLimit - alreadyWithdrawnToday;
     super({
       statusCode: 422,
-      error: 'DAILY_LIMIT_EXCEEDED',
+      error: "DAILY_LIMIT_EXCEEDED",
       message:
         `Daily withdrawal limit exceeded: limit is ${dailyWithdrawalLimit}, ` +
         `already withdrawn today: ${alreadyWithdrawnToday}, ` +

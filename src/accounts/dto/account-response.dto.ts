@@ -1,6 +1,6 @@
-import { AccountType } from '@prisma/client';
-import { createZodDto } from 'nestjs-zod';
-import { z } from 'zod';
+import { AccountType } from "@prisma/client";
+import { createZodDto } from "nestjs-zod";
+import { z } from "zod";
 
 export const AccountResponseSchema = z.object({
   accountId: z.uuid(),

@@ -51,7 +51,10 @@ export class TransactionsService {
         { isolationLevel: Prisma.TransactionIsolationLevel.Serializable },
       ),
     ).catch((err) => {
-      if (err instanceof Prisma.PrismaClientKnownRequestError && err.code === "P2025") {
+      if (
+        err instanceof Prisma.PrismaClientKnownRequestError &&
+        err.code === "P2025"
+      ) {
         throw new AccountNotFoundException(accountId);
       }
       throw err;
@@ -114,7 +117,10 @@ export class TransactionsService {
         { isolationLevel: Prisma.TransactionIsolationLevel.Serializable },
       ),
     ).catch((err) => {
-      if (err instanceof Prisma.PrismaClientKnownRequestError && err.code === "P2025") {
+      if (
+        err instanceof Prisma.PrismaClientKnownRequestError &&
+        err.code === "P2025"
+      ) {
         throw new AccountNotFoundException(accountId);
       }
       throw err;
@@ -140,9 +146,7 @@ export class TransactionsService {
     return transactions.map((t) => this.toResponseDto(t));
   }
 
-  private async retry<T>(
-    operation: () => Promise<T>,
-  ): Promise<T> {
+  private async retry<T>(operation: () => Promise<T>): Promise<T> {
     let lastError;
     for (let attempt = 0; attempt < MAX_RETRIES; attempt++) {
       try {

@@ -1,9 +1,9 @@
-import { Injectable } from '@nestjs/common';
-import { Account } from '@prisma/client';
-import { PrismaService } from '../prisma/prisma.service';
-import { AccountNotFoundException } from '../common/exceptions/account-not-found.exception';
-import { CreateAccountDto } from './dto/create-account.dto';
-import { AccountResponseDto } from './dto/account-response.dto';
+import { Injectable } from "@nestjs/common";
+import { Account } from "@prisma/client";
+import { PrismaService } from "../prisma/prisma.service";
+import { AccountNotFoundException } from "../common/exceptions/account-not-found.exception";
+import { CreateAccountDto } from "./dto/create-account.dto";
+import { AccountResponseDto } from "./dto/account-response.dto";
 
 @Injectable()
 export class AccountsService {

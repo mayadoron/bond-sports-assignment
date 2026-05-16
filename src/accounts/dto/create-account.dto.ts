@@ -1,6 +1,6 @@
-import { AccountType } from '@prisma/client';
-import { createZodDto } from 'nestjs-zod';
-import { z } from 'zod';
+import { AccountType } from "@prisma/client";
+import { createZodDto } from "nestjs-zod";
+import { z } from "zod";
 
 const MAX_DECIMAL_PLACES = 2;
 
@@ -9,13 +9,8 @@ const decimalPrecision = (val: number) =>
 
 export const CreateAccountSchema = z.object({
   personId: z.uuid(),
-  dailyWithdrawalLimit: z
-    .number()
-    .gte(0),
-  initialBalance: z
-    .number()
-    .gte(0)
-    .optional(),
+  dailyWithdrawalLimit: z.number().gte(0),
+  initialBalance: z.number().gte(0).optional(),
   accountType: z.enum(AccountType),
 });
 
